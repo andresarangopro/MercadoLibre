@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ProductDataImage"
+            type="String" />
+
+        <variable
+            name="ProductDataName"
+            type="String" />
+
+        <variable
+            name="ProductSellerName"
+            type="String" />
+
+        <variable
+            name="ProductPrice"
+            type="String" />
+
+        <variable
+            name="ProductStock"
+            type="String" />
+
+        <variable
+            name="ProductStateName"
+            type="String" />
+
+        <variable
+            name="ProductCityName"
+            type="String" />
+
+        <variable
+            name="ProductShippingType"
+            type="String" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/s_ligth">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Character Detail Section -->
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    card_view:cardCornerRadius="10dp"
+                    card_view:cardElevation="5dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/productImage"
+                                android:layout_width="128dp"
+                                android:layout_height="128dp"
+                                android:contentDescription="@string/app_name"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:src="@drawable/ic_camera_alt_black" />
+
+                            <TextView
+                                android:id="@+id/productName"
+                                style="@style/ProductDetailSectionName"
+                                android:gravity="center"
+                                android:text="@{ProductDataName}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/productImage"
+                                tools:text="Rick Sanchez" />
+
+                            <TextView
+                                android:id="@+id/productStatusLabel"
+                                style="@style/ProductDetailHeaderSectionTitle"
+                                android:text="@string/price"
+                                app:layout_constraintEnd_toStartOf="@id/productorSpeciesLabel"
+                                app:layout_constraintHorizontal_chainStyle="spread"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/productName" />
+
+                            <TextView
+                                android:id="@+id/productorSpeciesLabel"
+                                style="@style/ProductDetailHeaderSectionTitle"
+                                android:text="@string/seller"
+                                app:layout_constraintEnd_toStartOf="@id/characterGenderLabel"
+                                app:layout_constraintStart_toEndOf="@id/productStatusLabel"
+                                app:layout_constraintTop_toBottomOf="@id/productName" />
+
+                            <TextView
+                                android:id="@+id/characterGenderLabel"
+                                style="@style/ProductDetailHeaderSectionTitle"
+                                android:text="@string/product_stock"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/productorSpeciesLabel"
+                                app:layout_constraintTop_toBottomOf="@id/productName" />
+
+                            <TextView
+                                style="@style/ProductDetailHeaderSectionBody"
+                                android:text="@{ProductPrice}"
+                                app:layout_constraintEnd_toEndOf="@id/productStatusLabel"
+                                app:layout_constraintStart_toStartOf="@id/productStatusLabel"
+                                app:layout_constraintTop_toBottomOf="@id/productStatusLabel"
+                                tools:text="Alive" />
+
+                            <TextView
+                                style="@style/ProductDetailHeaderSectionBody"
+                                android:text="@{ProductSellerName}"
+                                app:layout_constraintEnd_toEndOf="@id/productorSpeciesLabel"
+                                app:layout_constraintStart_toStartOf="@id/productorSpeciesLabel"
+                                app:layout_constraintTop_toBottomOf="@id/productorSpeciesLabel"
+                                tools:text="Human" />
+
+                            <TextView
+                                style="@style/ProductDetailHeaderSectionBody"
+                                android:text="@{ProductStock}"
+                                app:layout_constraintEnd_toEndOf="@id/characterGenderLabel"
+                                app:layout_constraintStart_toStartOf="@id/characterGenderLabel"
+                                app:layout_constraintTop_toBottomOf="@id/characterGenderLabel"
+                                tools:text="Male" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Location & Origin Sections -->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/ProductDetailLocationSectionCard"
+                        android:id="@+id/parentOrigin"
+                        android:layout_height="@dimen/character_detail_location_height"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintEnd_toStartOf="@+id/parentLocation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true"
+                        android:layout_marginLeft="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/ProductDetailSectionTitle"
+                                android:text="@string/product_address" />
+
+                            <TextView
+                                style="@style/ProductDetailLocationSectionBody"
+                                android:text="@{ProductStateName}"
+                                tools:text="Earth" />
+
+                            <TextView
+                                style="@style/ProductDetailLocationSectionBody"
+                                android:text="@{ProductCityName}"
+                                tools:text="Earth" />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/ProductDetailLocationSectionCard"
+                        android:id="@+id/parentLocation"
+                        android:layout_height="@dimen/character_detail_location_height"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/parentOrigin"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true"
+                        android:layout_marginRight="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/ProductDetailSectionTitle"
+                                android:text="@string/product_shiping" />
+
+                            <TextView
+                                style="@style/ProductDetailLocationSectionBody"
+                                android:text="@{ProductShippingType}"
+                                tools:text="Earth" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Episode List Section -->
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    card_view:cardCornerRadius="10dp"
+                    card_view:cardElevation="5dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <!--<LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+                        <TextView
+                            style="@style/CharacterDetailSectionTitle"
+                            android:text="@string/section_list_of_episodes" />
+                        <ProgressBar
+                            android:id="@+id/episodeProgressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvEpisodeList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="8"
+                            tools:listitem="@layout/item_list_episode" />
+                    </LinearLayout>-->
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
