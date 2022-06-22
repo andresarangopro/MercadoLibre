@@ -11,9 +11,7 @@ import com.mercadolibre.items.domain.usecases.GetListProductsBySearchUseCase.Par
 class GetListProductsBySearchUseCase
 @Inject constructor(private val mercadoLibreRepository: MercadoLibreRepository) : UseCase<List<ProductListObject>, Params>(){
     override suspend fun run(params: Params): Either<Failure, List<ProductListObject>> {
-        var mercadoLibreRepository = mercadoLibreRepository.productList(params.search, params.limit)
-
-        return mercadoLibreRepository
+        return mercadoLibreRepository.productList(params.search, params.limit)
     }
 
     data class Params(val search: String, val limit: Int)

@@ -1,6 +1,5 @@
 package com.mercadolibre.items.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -41,7 +40,7 @@ class ProductListViewModel
     }
 
     sealed class EventsProductListViewModel{
-        data class SearchedWord(val search: String):EventsProductListViewModel()
+        data class WritedWord(val search: String):EventsProductListViewModel()
     }
 
     sealed class StatesProductListViewModel{
@@ -50,7 +49,7 @@ class ProductListViewModel
 
     override fun manageEvent(event: EventsProductListViewModel) {
         when(event){
-            is EventsProductListViewModel.SearchedWord ->{
+            is EventsProductListViewModel.WritedWord ->{
                 loadListProducts(event.search, 50)
             }
         }

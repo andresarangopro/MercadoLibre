@@ -14,10 +14,11 @@ import com.mercadolibre.items.core.exception.Failure.NetworkConnection
 import com.mercadolibre.items.core.exception.Failure.ServerError
 import com.mercadolibre.items.core.extensions.failure
 import com.mercadolibre.items.core.extensions.observe
+import com.mercadolibre.items.core.extensions.onQueryTextChanged
 import com.mercadolibre.items.data.ProductFailure.ListNotAvailable
 import com.mercadolibre.items.databinding.FragmentProductListBinding
 import com.mercadolibre.items.ui.viewmodels.ProductListViewModel
-import com.mercadolibre.items.ui.viewmodels.ProductListViewModel.EventsProductListViewModel.SearchedWord
+import com.mercadolibre.items.ui.viewmodels.ProductListViewModel.EventsProductListViewModel.WritedWord
 import com.mercadolibre.items.ui.viewmodels.ProductListViewModel.StatesProductListViewModel.LoadAdapterListProducts
 import com.mercadolibre.items.ui.viewmodels.ProductListViewModel.StatesProductListViewModel
 import com.mercadolibre.items.ui.viewmodels.States
@@ -40,6 +41,9 @@ class ProductListFragment : Fragment() {
     ): View {
 
         _binding = FragmentProductListBinding.inflate(inflater, container, false)
+        binding.searchProduct.onQueryTextChanged {
+            productListViewModel.postEvent(WritedWord(it))
+        }
         return binding.root
 
     }
@@ -59,7 +63,7 @@ class ProductListFragment : Fragment() {
             when (navigation) {
                 is LoadAdapterListProducts -> navigation.run{
                     listProducts.forEach {
-                        Log.d("COÑO", "${it.id} -- ${it.title} -- ${it.price}")
+                        Log.d("COÑO", "${it.id} -- ${it.title} -- ${it.price} -- ${listProducts.size}")
                     }
                 }
             }
@@ -81,8 +85,6 @@ class ProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        productListViewModel.postEvent(SearchedWord("Motorola"))
     }
 
     override fun onDestroyView() {
