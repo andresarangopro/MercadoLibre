@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/p_ligth_1</item>
         <item name="colorPrimaryVariant">@color/p_ligth_1</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -12,6 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/black</item>
+        <item name="actionBarWidgetTheme">@style/MyActionBarWidgetTheme</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+
     </style>
 
     <style name="Theme.MercadoLibre.NoActionBar">
@@ -19,21 +24,54 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="MyActionBarWidgetTheme">
+        <item name="android:textColorSecondary">@android:color/black</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+
+        <item name="closeIcon">@drawable/close_icon</item>
+
+    </style>
     <style name="ProductListItemName">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:background">@color/colorTransparentAccent</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:gravity">left</item>
         <item name="android:maxLines">1</item>
         <item name="android:padding">4dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ProductDetailCountName">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:gravity">left</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="ProductListItemPrice">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProductGridItemImage">
         <item name="android:layout_height">@dimen/character_list_item_size</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
         <item name="android:scaleType">centerCrop</item>
 
     </style>
@@ -86,5 +124,9 @@
 
     <style name="Theme.MercadoLibre.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.MercadoLibre.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MercadoLibre.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+    </style>
 </resources>

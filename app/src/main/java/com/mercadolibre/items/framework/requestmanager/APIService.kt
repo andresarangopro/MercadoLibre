@@ -8,8 +8,15 @@ import retrofit2.http.Query
 internal interface MercadoLibreApi {
     companion object {
         const val ENDPOINT_PRODUCTS = "/sites/MCO/search?"
+        const val ENDPOINT_DETAIL_PRODUCT = "/items?"
     }
 
     @GET(ENDPOINT_PRODUCTS)
-    fun getProductsBySearch(@Query("q") q: String?, @Query("limit") limit: Int?): Call<ProductResponseServer>
+    fun getProductsBySearch(
+        @Query("q") q: String?,
+        @Query("limit") limit: Int?
+    ): Call<ProductResponseServer>
+
+    @GET(ENDPOINT_DETAIL_PRODUCT)
+    fun getProductDetail(@Query("ids") ids: String?): Call<List<ProductBodyServer>>
 }

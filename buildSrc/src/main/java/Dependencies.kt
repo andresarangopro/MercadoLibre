@@ -29,13 +29,18 @@ object Deps {
     val hiltCompilerAndroidx by lazy { "androidx.hilt:hilt-compiler:${Versions.hilt}" }
 
     //retrofit
-    val retrofit by lazy { "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"}
-    val retrofitGsonLib by lazy { "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}"}
+    val retrofit by lazy { "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}" }
+    val retrofitGsonLib by lazy { "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}" }
+
     //gson
-    val gson by lazy { "com.google.code.gson:gson:${Versions.gson}"}
+    val gson by lazy { "com.google.code.gson:gson:${Versions.gson}" }
 
     val okHttpLoggingInterceptor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.okHttpLoggingInterceptor}"
+    val glide by lazy { "com.github.bumptech.glide:glide:${Versions.glide}" }
+
+    //paging
+    val pagination by lazy { "androidx.paging:paging-runtime:${Versions.pagination}" }
 }
 
 object ConfigData {

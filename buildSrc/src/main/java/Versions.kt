@@ -13,6 +13,8 @@ object Versions {
     const val ktx = "2.4.2"
     const val coreKtx = "1.7.0"
     const val okHttpLoggingInterceptor = "4.9.0"
+    const val glide = "4.12.0"
+    const val pagination = "3.0.0-alpha03"
 
     //hilt
     const val hilt = "2.42"

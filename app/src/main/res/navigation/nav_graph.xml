@@ -12,8 +12,13 @@
         tools:layout="@layout/fragment_product_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/DetailProductFragment" />
+            android:id="@+id/actions_Open_Detail_Product"
+            app:destination="@id/DetailProductFragment"/>
+        <argument
+            android:name="idProduct"
+            app:argType="string"
+            android:defaultValue="0" />
+
     </fragment>
     <fragment
         android:id="@+id/DetailProductFragment"
@@ -24,5 +29,9 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/ListProductsFragment" />
+        <argument
+            android:name="idProduct"
+            app:argType="string"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

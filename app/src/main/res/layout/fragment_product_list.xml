@@ -10,46 +10,82 @@
             type="String" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/s_ligth"
         tools:context=".ui.MainActivity">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcv_search_view"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_normal"
-            android:layout_marginVertical="@dimen/margin_small"
-            app:cardCornerRadius="@dimen/search_view_radius"
+            android:theme="@style/Theme.MercadoLibre.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <SearchView
-                android:id="@+id/searchProduct"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:iconifiedByDefault="false"
-                android:imeOptions="actionDone|flagNoExtractUi"
-                android:queryBackground="@color/transparent"
-                android:queryHint="Buscar Producto"
-                android:searchHintIcon="@null"
-                android:searchIcon="@null" />
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginBottom="@dimen/margin_big"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.MercadoLibre.PopupOverlay">
 
-        </com.google.android.material.card.MaterialCardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_search_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_normal"
+                        android:layout_marginVertical="@dimen/margin_small"
+                        android:layout_weight="0.8"
+                        app:cardCornerRadius="@dimen/search_view_radius"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <SearchView
+                            android:id="@+id/searchProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:closeIcon="@drawable/close_icon"
+                            android:iconifiedByDefault="false"
+                            android:imeOptions="actionDone|flagNoExtractUi"
+                            android:queryBackground="@color/transparent"
+                            android:queryHint="Buscar Producto"
+                            android:searchHintIcon="@null"
+                            android:searchIcon="@drawable/search_icon"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/shopping_cart_black_24dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
-            android:layout_width="410dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            android:padding="@dimen/margin_big"
-            android:layout_marginTop="70dp"
+            android:padding="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mcv_search_view"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             tools:context=".ui.MainActivity">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -60,8 +96,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible"
-                tools:ignore="MissingClass">
+                tools:ignore="MissingClass"
+                tools:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPlaceList"

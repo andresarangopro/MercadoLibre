@@ -20,6 +20,7 @@
     <string name="product_stock">Disponibles</string>
     <string name="product_address">Dirección</string>
     <string name="product_shiping">Tipo de envio</string>
+    <string name="hintSearchMess">Buscar en Mercado Libre</string>
 
     <string name="failure_network_connection">No hay conexión.</string>
     <string name="failure_server_error">Error en el servidor</string>

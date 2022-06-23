@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="product"
+            type="com.mercadolibre.items.domain.ProductListObject" />
+
 
 
     </data>
@@ -12,8 +16,11 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardView"
         app:cardElevation="2dp"
-        app:cardCornerRadius="12dp">
+        android:layout_margin="@dimen/margin_small_2dp"
+        app:cardCornerRadius="0dp"
+        android:paddingBottom="@dimen/margin_normal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,6 +35,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
                 tools:src="@mipmap/ic_launcher_round" />
@@ -35,23 +44,29 @@
             <TextView
                 android:id="@+id/product_name"
                 style="@style/ProductListItemName"
-                android:text="@{}"
-                app:layout_constraintBottom_toTopOf="@+id/product_price"
+                android:text="@{product.title}"
+                app:layout_constraintTop_toBottomOf="@+id/product_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="VideoJuegos"/>
 
             <TextView
                 android:id="@+id/product_price"
-                style="@style/ProductListItemName"
-                android:text="@{Integer.toString(10000)}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/ProductListItemPrice"
+                android:text="@{product.priceString}"
+                app:layout_constraintTop_toBottomOf="@+id/product_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="$000" />
 
-
-
+            <TextView
+                android:id="@+id/product_installments"
+                style="@style/ProductListItemName"
+                android:text="@{product.installment.amountString}"
+                app:layout_constraintTop_toBottomOf="@+id/product_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="36 x 4560"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

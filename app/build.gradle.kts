@@ -1,8 +1,10 @@
 plugins {
     id("com.android.application")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("kotlin-android")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
 }
 
@@ -59,6 +61,8 @@ dependencies {
     implementation(Deps.gson)
     implementation(Deps.retrofitGsonLib)
     implementation(Deps.okHttpLoggingInterceptor)
+    implementation(Deps.pagination)
+    implementation(Deps.glide)
     kapt(Deps.hiltCompilerGoogle)
     testImplementation(Deps.junit)
     androidTestImplementation (Deps.androidTestEspresso)

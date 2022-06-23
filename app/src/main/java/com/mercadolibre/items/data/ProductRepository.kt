@@ -1,25 +1,26 @@
 package com.mercadolibre.items.data
 
-import androidx.lifecycle.Transformations.map
 import com.mercadolibre.items.core.exception.Failure
 import com.mercadolibre.items.core.functional.Either
 import com.mercadolibre.items.core.platform.NetworkHandler
+import com.mercadolibre.items.domain.Product
 import com.mercadolibre.items.domain.ProductListObject
-import com.mercadolibre.items.framework.requestmanager.ProductListObjectServer
-import com.mercadolibre.items.framework.requestmanager.ProductResponseServer
+import com.mercadolibre.items.framework.requestmanager.*
 import com.mercadolibre.items.framework.requestmanager.di.APIServiceModule
-import com.mercadolibre.items.framework.requestmanager.toProductDomainList
 import javax.inject.Inject
 
 interface MercadoLibreRepository {
     fun productList(search: String, limit: Int = 50):
             Either<Failure, List<ProductListObject>>
 
+    fun productDetail(id: String):
+            Either<Failure, Product>
+
     class Network
     @Inject constructor(
         private val networkHandler: NetworkHandler,
         private val service: APIServiceModule
-    ): MercadoLibreRepository {
+    ) : MercadoLibreRepository {
 
         override fun productList(
             search: String,
@@ -28,8 +29,19 @@ interface MercadoLibreRepository {
             return when (networkHandler.isNetworkAvailable()) {
                 true -> request(
                     service.getProductsBySearch(search, limit),
-                    {it.toProductDomainList()},
+                    { it.toProductDomainList() },
                     ProductResponseServer(emptyList())
+                )
+                false -> Either.Left(Failure.NetworkConnection)
+            }
+        }
+
+        override fun productDetail(id: String): Either<Failure, Product> {
+            return when (networkHandler.isNetworkAvailable()) {
+                true -> request(
+                    service.getProductDetail(id),
+                    { it.toProductDomain() },
+                    emptyList()
                 )
                 false -> Either.Left(Failure.NetworkConnection)
             }
