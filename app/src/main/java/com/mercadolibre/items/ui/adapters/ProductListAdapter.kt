@@ -17,6 +17,10 @@ class ProductListAdapter
         notifyDataSetChanged()
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     internal var clickListener: (ProductListObject) -> Unit = { _ -> }
 
     class ViewHolder(private val binding: ItemGridProductBinding) :

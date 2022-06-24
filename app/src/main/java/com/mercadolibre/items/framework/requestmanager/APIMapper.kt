@@ -13,7 +13,7 @@ fun ProductResponseServer.toProductDomainList(): List<ProductListObject> = resul
             available_quantity,
             thumbnail,
             condition,
-            installment.toDomainInstallments(),
+            installment?.toDomainInstallments(),
             address.toDomainAddress(),
             shipping.toDomainShipping(),
         )

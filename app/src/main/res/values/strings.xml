@@ -26,4 +26,6 @@
     <string name="failure_server_error">Error en el servidor</string>
     <string name="failure_products_list_unavailable">Products Indisponible.</string>
     <string name="failure_product_non_existent">No hay ningún producto con esa busqueda.</string>
+
+    <string name="action_refresh">Refresh</string>
 </resources>

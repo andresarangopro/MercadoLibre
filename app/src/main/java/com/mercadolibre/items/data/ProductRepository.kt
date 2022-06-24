@@ -10,7 +10,7 @@ import com.mercadolibre.items.framework.requestmanager.di.APIServiceModule
 import javax.inject.Inject
 
 interface MercadoLibreRepository {
-    fun productList(search: String, limit: Int = 50):
+    fun productList(search: String?, limit: Int = 50):
             Either<Failure, List<ProductListObject>>
 
     fun productDetail(id: String):
@@ -23,7 +23,7 @@ interface MercadoLibreRepository {
     ) : MercadoLibreRepository {
 
         override fun productList(
-            search: String,
+            search: String?,
             limit: Int
         ): Either<Failure, List<ProductListObject>> {
             return when (networkHandler.isNetworkAvailable()) {

@@ -2,7 +2,6 @@ package com.mercadolibre.items.ui
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mercadolibre.items.R
 import com.mercadolibre.items.core.exception.Failure
 import com.mercadolibre.items.core.exception.Failure.NetworkConnection
@@ -23,6 +20,7 @@ import com.mercadolibre.items.core.exception.Failure.ServerError
 import com.mercadolibre.items.core.extensions.failure
 import com.mercadolibre.items.core.extensions.observe
 import com.mercadolibre.items.core.extensions.onQueryTextChanged
+import com.mercadolibre.items.core.platform.BaseFragment
 import com.mercadolibre.items.data.ProductFailure.ListNotAvailable
 import com.mercadolibre.items.databinding.FragmentProductListBinding
 import com.mercadolibre.items.ui.adapters.ProductListAdapter
@@ -35,7 +33,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProductListFragment : Fragment() {
+class ProductListFragment : BaseFragment() {
 
     private var _binding: FragmentProductListBinding? = null
 
@@ -46,7 +44,7 @@ class ProductListFragment : Fragment() {
 
     private val productListViewModel: ProductListViewModel by viewModels()
 
-    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
+    private fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,14 +63,14 @@ class ProductListFragment : Fragment() {
         )
 
         binding.searchProduct.onQueryTextChanged {
+            showProgress()
             productListViewModel.postEvent(
-                ProductListViewModel.EventsProductListViewModel.WroteWord(
-                    it
+                ProductListViewModel.EventsProductListViewModel.GetListBySearch(
+                    it, 10
                 )
             )
         }
         return binding.root
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +87,14 @@ class ProductListFragment : Fragment() {
         event?.getContentIfNotHandled()?.let { navigation ->
             when (navigation) {
                 is LoadAdapterListProducts -> navigation.run {
-                    productAdapter.collection = listProducts.orEmpty()
+                    hideProgress()
+                    productAdapter.collection = listProducts
+                }
+                is StatesProductListViewModel.ShowBottomLoader -> {
+                    binding.progressBottom.visibility = View.VISIBLE
+                }
+                is StatesProductListViewModel.HideBottomLoader -> {
+                    binding.progressBottom.visibility = View.GONE
                 }
             }
         }
@@ -105,29 +110,55 @@ class ProductListFragment : Fragment() {
     }
 
     private fun renderFailure(@StringRes message: Int) {
-        Log.d("err", "joder ${requireContext().getResources().getText(message)}")
+        hideProgress()
+        binding.progressBottom.visibility = View.GONE
+        notifyWithAction(message, R.string.action_refresh) {}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (firstTimeCreated(savedInstanceState) == false) {
+        if (firstTimeCreated(savedInstanceState = savedInstanceState) == false) {
             productListViewModel.postEvent(ProductListViewModel.EventsProductListViewModel.ReloadAdapterIfListIsDifferentOfNull)
         }
+        initList()
+    }
 
-        binding.rvPlaceList.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        binding.rvPlaceList.adapter = productAdapter
-        productAdapter.clickListener = { product ->
-            product.id?.let {
-                findNavController().navigate(
-                    ProductListFragmentDirections.actionsOpenDetailProduct(it)
-                )
+    private fun initList() {
+
+        val gridLayoutManager = GridLayoutManager(context, 2)
+
+        with(binding.rvPlaceList) {
+            if (!productAdapter.hasObservers()) {
+                productAdapter.setHasStableIds(true)
             }
+            binding.rvPlaceList.adapter = productAdapter
+            binding.rvPlaceList.layoutManager = gridLayoutManager
+
+            productAdapter.clickListener = { product ->
+                product.id?.let {
+                    findNavController().navigate(
+                        ProductListFragmentDirections.actionsOpenDetailProduct(it)
+                    )
+                }
+            }
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = gridLayoutManager.itemCount
+                    productListViewModel.listScrolled(lastVisibleItem, totalItemCount)
+                }
+            })
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

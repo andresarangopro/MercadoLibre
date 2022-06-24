@@ -78,37 +78,25 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/progress_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             tools:context=".ui.MainActivity">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/srwProductList"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPlaceList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingClass"
-                tools:visibility="visible">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPlaceList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-                    tools:itemCount="12"
-                    tools:listitem="@layout/item_grid_product" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="12"
+                tools:listitem="@layout/item_grid_product" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,5 +109,15 @@
                 tools:visibility="visible" />
 
         </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:indeterminateTint="@color/primary"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

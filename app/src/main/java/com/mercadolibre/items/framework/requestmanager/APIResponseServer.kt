@@ -39,7 +39,7 @@ data class ProductListObjectServer(
     @SerializedName(KEY_THUMBNAIL) val thumbnail: String,
     @SerializedName(KEY_CONDITION) val condition: String,
     @SerializedName(KEY_ADDRESS) val address: AddressServer,
-    @SerializedName(KEY_INSTALLMENTS) val installment: InstallmentsServer,
+    @SerializedName(KEY_INSTALLMENTS) val installment: InstallmentsServer?,
     @SerializedName(KEY_SHIPPING) val shipping: ShippingServer
 ) : Parcelable
 

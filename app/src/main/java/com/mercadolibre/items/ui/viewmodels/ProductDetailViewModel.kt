@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mercadolibre.items.core.platform.BaseViewModel
 import com.mercadolibre.items.domain.Product
-import com.mercadolibre.items.domain.ProductListObject
 import com.mercadolibre.items.domain.usecases.GetDetailProductUseCase
-import com.mercadolibre.items.domain.usecases.GetListProductsBySearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -45,7 +43,6 @@ class ProductDetailViewModel
 
     sealed class EventsProductListViewModel {
         data class GetDetailProduct(val id: String) : EventsProductListViewModel()
-        object ReloadAdapterIfListIsDifferentOfNull : EventsProductListViewModel()
     }
 
     sealed class StatesProductListViewModel {
@@ -54,10 +51,9 @@ class ProductDetailViewModel
 
     override fun manageEvent(event: EventsProductListViewModel) {
         when (event) {
-            is EventsProductListViewModel.GetDetailProduct ->{
+            is EventsProductListViewModel.GetDetailProduct -> {
                 getDetailProduct(event.id)
             }
-            else -> {}
         }
     }
 }
