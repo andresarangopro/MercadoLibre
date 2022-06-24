@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mercadolibre.items.core.platform.BaseViewModel
-import com.mercadolibre.items.domain.Product
 import com.mercadolibre.items.domain.ProductListObject
-import com.mercadolibre.items.domain.usecases.GetDetailProductUseCase
 import com.mercadolibre.items.domain.usecases.GetListProductsBySearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -26,11 +23,14 @@ class ProductListViewModel
     private val _states: MutableLiveData<States<StatesProductListViewModel>> = MutableLiveData()
     val states: LiveData<States<StatesProductListViewModel>> get() = _states
 
+    private val _queryWord: MutableLiveData<String> = MutableLiveData()
+    val queryWord: LiveData<String> get() = _queryWord
+
     private var isRequestInProgress = false
 
-    private fun loadListProducts(search: String, limit: Int) =
+    fun loadListProducts(limit: Int) =
         getListProductsBySearchUseCase(
-            GetListProductsBySearchUseCase.Params(search, limit),
+            GetListProductsBySearchUseCase.Params(queryWord.value, limit),
             viewModelScope
         ) {
             it.fold(
@@ -47,7 +47,9 @@ class ProductListViewModel
     }
 
     sealed class EventsProductListViewModel {
-        data class WroteWord(val search: String) : EventsProductListViewModel()
+        data class GetListBySearch(val search: String, val limit: Int) :
+            EventsProductListViewModel()
+
         object ReloadAdapterIfListIsDifferentOfNull : EventsProductListViewModel()
     }
 
@@ -58,8 +60,9 @@ class ProductListViewModel
 
     override fun manageEvent(event: EventsProductListViewModel) {
         when (event) {
-            is EventsProductListViewModel.WroteWord -> {
-                loadListProducts(event.search, 50)
+            is EventsProductListViewModel.GetListBySearch -> {
+                _queryWord.value = event.search
+                loadListProducts(event.limit)
             }
             is EventsProductListViewModel.ReloadAdapterIfListIsDifferentOfNull -> {
                 if (listProducts.value?.isNotEmpty() == true) {
@@ -72,11 +75,11 @@ class ProductListViewModel
         }
     }
 
-    fun listScrolled(search: String, lastVisibleItem: Int, totalItems: Int) {
+    fun listScrolled(lastVisibleItem: Int, totalItems: Int) {
         if (totalItems - 1 - lastVisibleItem == 0) {
             if (isRequestInProgress.not()) {
                 isRequestInProgress = true
-                loadListProducts(search, totalItems)
+                loadListProducts(totalItems + 10)
                 isRequestInProgress = false
             }
         }

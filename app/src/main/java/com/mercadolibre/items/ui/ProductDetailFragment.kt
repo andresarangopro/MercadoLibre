@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.mercadolibre.items.R
 import com.mercadolibre.items.core.exception.Failure
@@ -16,6 +18,7 @@ import com.mercadolibre.items.core.extensions.failure
 import com.mercadolibre.items.core.extensions.observe
 import com.mercadolibre.items.data.ProductFailure
 import com.mercadolibre.items.databinding.FragmentDetailProductBinding
+import com.mercadolibre.items.ui.adapters.ProductListAdapter
 import com.mercadolibre.items.ui.adapters.ViewPagerAdapter
 import com.mercadolibre.items.ui.viewmodels.ProductDetailViewModel
 import com.mercadolibre.items.ui.viewmodels.ProductListViewModel
@@ -90,6 +93,7 @@ class ProductDetailFragment : Fragment() {
     private fun renderFailure(@StringRes message: Int) {
         Log.d("err", "joder ${requireContext().resources.getText(message)}")
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

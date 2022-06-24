@@ -1,10 +1,11 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-kapt")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
-    id("dagger.hilt.android.plugin")
+    id(BuildPlugins.androidApplication)
+    id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.kotlinAndroid)
+    id(BuildPlugins.kotlinParcelize)
+    id(BuildPlugins.safeArgsKotlin)
+    id(BuildPlugins.androidHilt)
+
     kotlin("android")
 }
 
@@ -12,7 +13,7 @@ android {
     compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.mercadolibre.items"
+        applicationId = ConfigData.appId
         minSdk = ConfigData.minSdkVersion
         targetSdk = ConfigData.targetSdkVersion
         versionCode = ConfigData.versionCode
@@ -20,6 +21,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
 
     buildTypes {
         getByName("release") {
@@ -30,6 +32,7 @@ android {
             )
         }
     }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -63,8 +66,18 @@ dependencies {
     implementation(Deps.okHttpLoggingInterceptor)
     implementation(Deps.pagination)
     implementation(Deps.glide)
+    implementation(Deps.javaPoet)
     kapt(Deps.hiltCompilerGoogle)
-    testImplementation(Deps.junit)
-    androidTestImplementation (Deps.androidTestEspresso)
-    androidTestImplementation (Deps.androidTestJunit)
+
+    testImplementation(TestDependencies.junit)
+    testImplementation(TestDependencies.coroutineTest)
+    testImplementation (TestDependencies.androidxArchCore)
+    testImplementation (TestDependencies.mockk)
+    testImplementation (TestDependencies.kluent)
+
+    androidTestImplementation (TestDependencies.androidTestEspresso)
+    androidTestImplementation (TestDependencies.androidTestJunit)
+    androidTestImplementation (TestDependencies.adevinta){
+        exclude(group = "org.jetbrains.kotlin")
+    }
 }

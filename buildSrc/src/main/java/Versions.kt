@@ -18,6 +18,7 @@ object Versions {
 
     //hilt
     const val hilt = "2.42"
+    const val javaPoet = "1.13.0"
 
     //retrofit
     const val retrofitVersion = "2.9.0"

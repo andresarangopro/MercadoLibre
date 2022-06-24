@@ -27,7 +27,7 @@ class ProductDetailViewModel
     val states: LiveData<States<StatesProductListViewModel>> get() = _states
 
 
-    private fun getDetailProduct(id: String) =
+    fun getDetailProduct(id: String) =
         getDetailProductUseCase(GetDetailProductUseCase.Params(id), viewModelScope) {
             it.fold(
                 ::handleFailure,

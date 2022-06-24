@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mercadolibre.items.R
 import com.mercadolibre.items.core.exception.Failure
 import com.mercadolibre.items.core.exception.Failure.NetworkConnection
@@ -66,14 +65,14 @@ class ProductListFragment : Fragment() {
 
         binding.searchProduct.onQueryTextChanged {
             productListViewModel.postEvent(
-                ProductListViewModel.EventsProductListViewModel.WroteWord(
-                    it
+                ProductListViewModel.EventsProductListViewModel.GetListBySearch(
+                    it, 10
                 )
             )
         }
         return binding.root
-
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,16 +112,35 @@ class ProductListFragment : Fragment() {
         if (firstTimeCreated(savedInstanceState) == false) {
             productListViewModel.postEvent(ProductListViewModel.EventsProductListViewModel.ReloadAdapterIfListIsDifferentOfNull)
         }
+        initList()
+    }
 
-        binding.rvPlaceList.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        binding.rvPlaceList.adapter = productAdapter
-        productAdapter.clickListener = { product ->
-            product.id?.let {
-                findNavController().navigate(
-                    ProductListFragmentDirections.actionsOpenDetailProduct(it)
-                )
+    private fun initList() {
+
+        val gridLayoutManager = GridLayoutManager(context, 2)
+
+        with(binding.rvPlaceList) {
+            if (!productAdapter.hasObservers()) {
+                productAdapter.setHasStableIds(true)
             }
+            binding.rvPlaceList.adapter = productAdapter
+            binding.rvPlaceList.layoutManager = gridLayoutManager
+
+            productAdapter.clickListener = { product ->
+                product.id?.let {
+                    findNavController().navigate(
+                        ProductListFragmentDirections.actionsOpenDetailProduct(it)
+                    )
+                }
+            }
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = gridLayoutManager.itemCount
+                    productListViewModel.listScrolled(lastVisibleItem, totalItemCount)
+                }
+            })
         }
     }
 

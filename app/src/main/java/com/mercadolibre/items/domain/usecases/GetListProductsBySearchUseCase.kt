@@ -9,10 +9,11 @@ import javax.inject.Inject
 import com.mercadolibre.items.domain.usecases.GetListProductsBySearchUseCase.Params
 
 class GetListProductsBySearchUseCase
-@Inject constructor(private val mercadoLibreRepository: MercadoLibreRepository) : UseCase<List<ProductListObject>, Params>(){
+@Inject constructor(private val mercadoLibreRepository: MercadoLibreRepository) :
+    UseCase<List<ProductListObject>, Params>() {
     override suspend fun run(params: Params): Either<Failure, List<ProductListObject>> {
         return mercadoLibreRepository.productList(params.search, params.limit)
     }
 
-    data class Params(val search: String, val limit: Int)
+    data class Params(val search: String?, val limit: Int)
 }
