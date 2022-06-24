@@ -25,7 +25,7 @@ presentation: This module has all android framework using MVVM
 
 framework: this module separate the external libraries from the other layers, in this case retrofit .
 
-![alt text](gitdata/Arquitecture.PNG)
+![alt text](gitdata/diagram.png)
 
   
 
