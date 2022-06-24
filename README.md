@@ -31,7 +31,7 @@ framework: this module separate the external libraries from the other layers, in
 
 ## Troubleshooting
   
-##API
+## API
 This project implements Mercado Libre's API. More about in:
 https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
   
