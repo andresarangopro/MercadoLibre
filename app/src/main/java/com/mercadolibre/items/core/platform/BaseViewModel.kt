@@ -22,13 +22,5 @@ abstract class BaseViewModel<in Event, State>  : ViewModel() {
         manageEvent(event)
     }
 
-    protected fun setState(state: State) {
-        _screenState.value = state
-    }
-
-    protected fun postState(state: State) {
-        _screenState.postValue(state)
-    }
-
     protected abstract fun manageEvent(event: Event)
 }

@@ -24,11 +24,11 @@ class ProductListViewModel
     val states: LiveData<States<StatesProductListViewModel>> get() = _states
 
     private val _queryWord: MutableLiveData<String> = MutableLiveData()
-    val queryWord: LiveData<String> get() = _queryWord
+    private val queryWord: LiveData<String> get() = _queryWord
 
     private var isRequestInProgress = false
 
-    fun loadListProducts(limit: Int) =
+    private fun loadListProducts(limit: Int) =
         getListProductsBySearchUseCase(
             GetListProductsBySearchUseCase.Params(queryWord.value, limit),
             viewModelScope
@@ -44,6 +44,7 @@ class ProductListViewModel
         listProducts.value?.let {
             _states.value = States(StatesProductListViewModel.LoadAdapterListProducts(it))
         }
+        _states.value = States(StatesProductListViewModel.HideBottomLoader)
     }
 
     sealed class EventsProductListViewModel {
@@ -51,11 +52,17 @@ class ProductListViewModel
             EventsProductListViewModel()
 
         object ReloadAdapterIfListIsDifferentOfNull : EventsProductListViewModel()
+
+
     }
 
     sealed class StatesProductListViewModel {
         data class LoadAdapterListProducts(val listProducts: List<ProductListObject>) :
             StatesProductListViewModel()
+
+        object ShowBottomLoader : StatesProductListViewModel()
+
+        object HideBottomLoader : StatesProductListViewModel()
     }
 
     override fun manageEvent(event: EventsProductListViewModel) {
@@ -76,12 +83,11 @@ class ProductListViewModel
     }
 
     fun listScrolled(lastVisibleItem: Int, totalItems: Int) {
-        if (totalItems - 1 - lastVisibleItem == 0) {
-            if (isRequestInProgress.not()) {
-                isRequestInProgress = true
-                loadListProducts(totalItems + 10)
-                isRequestInProgress = false
-            }
+        if (totalItems - 1 - lastVisibleItem == 0 && isRequestInProgress.not() && totalItems < 50) {
+            _states.value = States(StatesProductListViewModel.ShowBottomLoader)
+            isRequestInProgress = true
+            loadListProducts(totalItems + 10)
+            isRequestInProgress = false
         }
     }
 }

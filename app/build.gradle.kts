@@ -80,4 +80,6 @@ dependencies {
     androidTestImplementation (TestDependencies.adevinta){
         exclude(group = "org.jetbrains.kotlin")
     }
+
+    debugImplementation (DevLibraries.leakCanary)
 }

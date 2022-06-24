@@ -6,7 +6,7 @@ data class ProductListObject(
     val seller: Seller,
     val price: Long,
     val priceString: String,
-    val available_quantity: Int,
+    val availableQuantity: Int,
     val thumbnail: String,
     val condition: String,
     val installment: Installment?,
