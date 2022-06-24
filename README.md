@@ -31,9 +31,9 @@ framework: this module separate the external libraries from the other layers, in
 
 ## Troubleshooting
   
-
-if you get an error running Android app remember change direction ip in module framework:requestmanager is in the file named APIConstants
-
+##API
+This project implements Mercado Libre's API. More about in:
+https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
   
 
 ## Libraries Used :
@@ -64,3 +64,5 @@ if you get an error running Android app remember change direction ip in module f
 * [Barista](https://github.com/AdevintaSpain/Barista)
 
 * [Dagger Hilt](https://mvnrepository.com/artifact/com.google.dagger/hilt-android)
+
+* [Glide](https://github.com/bumptech/glide) 
